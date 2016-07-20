@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.kartiksaraswat.textme.ConversationActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/conversation_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorDarkAqua"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/conversation_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/appbar_layout"
+        android:layout_above="@+id/chat_box_layout"
+        android:background="@color/colorLight"
+        >
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/chat_box_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorLight"
+        android:padding="5dp"
+        >
+        <EditText
+            android:id="@+id/quick_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:inputType="textMultiLine"
+            android:hint="@string/type_here_hint"
+            android:textColorHint="@color/colorDarkAqua"
+            android:textColor="@color/colorDarkAqua"
+            android:backgroundTint="@color/colorDarkAqua"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:background="@color/colorDarkAqua"
+            android:textSize="24dp"
+            android:onClick="handleOnClickSendMessage" />
+    </LinearLayout>
+</RelativeLayout>

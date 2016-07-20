@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TextMe</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_drawer_title">Kartik Saraswat</string>
+    <string name="nav_drawer_number">9711875425</string>
+    <string name="default_sender">Jon doe</string>
+    <string name="default_msg_text">Hi How are you doing its been a long time !</string>
+    <string name="action_new_message">New</string>
+    <string name="default_time">00:00 am</string>
+    <string name="search_title">search_title</string>
+    <string name="search_hint">search here</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="input_name_number">Type Name or Number</string>
+    <string name="type_here_hint">Type your message here...</string>
+</resources>
