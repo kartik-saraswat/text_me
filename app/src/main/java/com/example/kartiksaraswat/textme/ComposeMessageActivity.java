@@ -143,6 +143,14 @@ public class ComposeMessageActivity extends Activity implements View.OnClickList
             broadcastReceivers.add(deliveryBroadcastReceiver);
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, body, sentPendingIntent, deliveredPendingIntent);
+
+            ContentValues values = new ContentValues();
+            values.put("address", phoneNumber);
+            values.put("body", body);
+            values.put("date", System.currentTimeMillis() + "");
+            getBaseContext().getContentResolver().insert(
+                    Uri.parse("content://sms/sent"), values);
+
         } catch (Exception e){
             System.out.println(getClass().getName() + "\n" + e);
         }
@@ -163,13 +171,6 @@ public class ComposeMessageActivity extends Activity implements View.OnClickList
         public void onReceive(Context context, Intent intent) {
             switch (getResultCode()) {
                 case Activity.RESULT_OK:
-                    ContentValues values = new ContentValues();
-                    values.put("address", phoneNumber);
-                    values.put("body", body);
-                    values.put("date", System.currentTimeMillis() + "");
-                    getBaseContext().getContentResolver().insert(
-                            Uri.parse("content://sms/sent"), values);
-
                     Toast.makeText(getBaseContext(), "SMS sent",
                             Toast.LENGTH_SHORT).show();
                     break;

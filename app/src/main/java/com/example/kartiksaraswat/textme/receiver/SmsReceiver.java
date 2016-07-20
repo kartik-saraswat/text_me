@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class SmsReceiver extends BroadcastReceiver {
     private final static String TAG = "SMS_RECEIVED";
-
     private List<Sms> smsList = new ArrayList<>();
 
     @Override

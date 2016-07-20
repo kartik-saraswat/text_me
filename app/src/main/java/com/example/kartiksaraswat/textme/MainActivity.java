@@ -10,7 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
+
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,8 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 
 import com.example.kartiksaraswat.textme.sms.Sms;
 import com.example.kartiksaraswat.textme.sms.SmsReader;
@@ -45,12 +43,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        smsReader = new SmsReader(MainActivity.this);
         new LoadInboxList().execute();
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        new LoadInboxList().execute();
     }
 
     private void handleComposeMessage() {
@@ -109,13 +109,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = new Intent(this, ConversationActivity.class);
         intent.putExtra("threadId",threadId);
         intent.putExtra("address",sms.getAddress());
-        intent.putExtra("name",sms.toString());
+        intent.putExtra("name", sms.toString());
         startActivity(intent);
     }
 
     void loadSmsIntoRecyclerView(){
-        mAdapter = new InboxRecyclerViewAdapter(this, smsList);
-        mRecyclerView.setAdapter(mAdapter);
+        if(mAdapter==null) {
+            mAdapter = new InboxRecyclerViewAdapter(this, smsList);
+            mRecyclerView.setAdapter(mAdapter);
+        } else{
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -142,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private class LoadInboxList extends AsyncTask<String, String, String>{
         @Override
         protected String doInBackground(String... params) {
-            smsReader = new SmsReader(MainActivity.this);
             smsReader.refresh();
             smsList = smsReader.getSmsList("");
             return "OK";

@@ -29,6 +29,8 @@ public class SmsReader {
     private Map<Integer,Boolean> threadSeenMap = new HashMap<>();
     private Context context;
 
+    long timeLastLoaded = 0;
+
     public SmsReader(Context context){
         this.context = context;
     }
@@ -39,12 +41,13 @@ public class SmsReader {
     }
 
     private boolean readConversations(String query){
-        permanentList.clear();
         threadSeenMap.clear();
         try{
             Uri uri = Uri.parse("content://sms/");
             String[] reqCols = {"_id", "thread_id", "address", "date", "body", "type"};
-            Cursor c = context.getContentResolver().query(uri, reqCols, null, null, "date DESC");
+            String selectionString = "date>"+timeLastLoaded;
+            timeLastLoaded = System.currentTimeMillis();
+            Cursor c = context.getContentResolver().query(uri, reqCols, selectionString, null, "date DESC");
             int indexId = c.getColumnIndex("_id");
             int indexThreadId = c.getColumnIndexOrThrow("thread_id");
             int indexAddress = c.getColumnIndexOrThrow("address");
@@ -79,10 +82,11 @@ public class SmsReader {
     }
 
     public List<Sms> getSmsList(String query){
+        smsList.clear();
         if(permanentList.size()>0) {
             for (int i = 0, k = 0; i < permanentList.size() && k < 50; i++) {
                 int threadId = permanentList.get(i).getSmsThreadId();
-                if (!threadSeenMap.get(threadId)) {
+                if ((!threadSeenMap.containsKey(threadId))||(threadSeenMap.get(threadId) == false)) {
                     smsList.add(permanentList.get(i));
                     threadSeenMap.put(threadId, true);
                     k++;
