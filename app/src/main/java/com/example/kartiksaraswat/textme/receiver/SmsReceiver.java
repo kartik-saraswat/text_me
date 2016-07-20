@@ -89,9 +89,15 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     private void showSmsNotification(Context context){
-        String title = smsList.size()==1? "New Message from " + smsList.get(0).getFromName(): smsList.size() + "new messages";
+        String title = smsList.size()==1? "New Message" : smsList.size() + "New messages";
+        String subject = "";
+
+        for(Sms sms : smsList){
+            subject+=sms.toString();
+        }
+
         NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(context.NOTIFICATION_SERVICE);
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pIntent =
@@ -100,7 +106,7 @@ public class SmsReceiver extends BroadcastReceiver {
         Notification smsNotification  = new Notification.Builder(context)
                 .setContentTitle(title)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("Subject")
+                .setContentText(subject)
                 .setContentIntent(pIntent)
                 .build();
         notificationManager.notify(0, smsNotification);
