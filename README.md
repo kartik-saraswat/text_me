@@ -12,6 +12,7 @@ A text messaging app for android devices
   1. Sms backup on google drive
   2. Contact thumbnail display
   3. Automatic Reloading Sms in chat thread and Inbox when new messages arrives.
+  4. When user clicks on notification take him to chat directly when messages are from one person.
   
 # Android features used
   1. RecyclerViews
