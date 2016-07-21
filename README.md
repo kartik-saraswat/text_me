@@ -11,6 +11,7 @@ A text messaging app for android devices
 # Todo
   1. Sms backup on google drive
   2. Contact thumbnail display
+  3. Automatic Reloading Sms in chat thread and Inbox when new messages arrives.
   
 # Android features used
   1. RecyclerViews
