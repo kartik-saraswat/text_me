@@ -30,9 +30,14 @@ public class SmsReader {
     private Context context;
 
     long timeLastLoaded = 0;
+    boolean ready = false;
 
     public SmsReader(Context context){
         this.context = context;
+    }
+
+    public boolean isReady(){
+        return ready;
     }
 
     public void addSms(Sms sms){
@@ -78,7 +83,9 @@ public class SmsReader {
     }
 
    public void refresh(){
+       ready = false;
         readConversations("");
+       ready = true;
     }
 
     public List<Sms> getSmsList(String query){

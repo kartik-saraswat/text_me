@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.kartiksaraswat.textme.sms.Sms;
 import com.example.kartiksaraswat.textme.sms.SmsReader;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                if(mAdapter==null || smsReader==null || smsReader.isReady()==false){
+                    Toast.makeText(MainActivity.this,"Loading Sms...",Toast.LENGTH_LONG);
+                    return false;
+                }
                 return true;
             }
 
@@ -124,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+
+        if(smsReader==null||smsReader.isReady()==false && mAdapter==null){
+            return false;
+        }
+
         List<Sms> newList = smsReader.searchQuery(query);
         ((InboxRecyclerViewAdapter) mAdapter).updateItems(newList);
         return true;
@@ -134,8 +144,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if(newText==null ||newText.isEmpty()){
             ((InboxRecyclerViewAdapter)mAdapter).updateItems(smsList);
             return true;
+        } else{
+            List<Sms> newList = smsReader.searchQuery(newText);
+            ((InboxRecyclerViewAdapter)mAdapter).updateItems(newList);
+            return true;
         }
-        return false;
     }
 
     public boolean reloadSmsList() {
