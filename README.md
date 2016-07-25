@@ -13,6 +13,7 @@ A text messaging app for android devices
   2. Contact thumbnail display
   3. Automatic Reloading Sms in chat thread and Inbox when new messages arrives.
   4. When user clicks on notification take him to chat directly when messages are from one person.
+  5. Use CursorLoader for fast loading and refreshing of Inbox data
   
 # Android features used
   1. RecyclerViews
